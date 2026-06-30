@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type UserProfile = {
+export type UserProfile = {
   name: string;
   age: number;
   height: number;

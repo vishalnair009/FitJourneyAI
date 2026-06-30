@@ -1,9 +1,9 @@
-import { User } from "../store/userStore";
+import { UserProfile } from "../store/userStore";
 import { DailyProgress } from "../store/dailyStore";
 
 export async function askDrona(
   message: string,
-  user: User,
+  user: UserProfile,
   progress: DailyProgress
 ): Promise<string> {
   const response = await fetch("/api/chat", {

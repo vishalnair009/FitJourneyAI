@@ -1,9 +1,7 @@
-import TestButton from "../components/ui/TestButton";
-
-export default function Home() {
+export default function TestButton() {
   return (
-    <main>
-      <TestButton />
-    </main>
+    <button className="rounded-lg bg-blue-500 px-4 py-2 text-white">
+      Test Button
+    </button>
   );
 }
