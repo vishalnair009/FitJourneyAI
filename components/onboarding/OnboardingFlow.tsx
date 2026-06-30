@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import WelcomeScreen from "./WelcomeScreen";
 import CoachIntroScreen from "./CoachIntroScreen";
@@ -9,10 +9,42 @@ import ProfileSetupScreen from "./ProfileSetupScreen";
 import DashboardScreen from "../dashboard/DashboardScreen";
 import ChatScreen from "../chat/ChatScreen";
 
+import { useUserStore } from "../../app/store/userStore";
+
+type Screen =
+  | "welcome"
+  | "coach"
+  | "goal"
+  | "profile"
+  | "dashboard"
+  | "chat";
+
 export default function OnboardingFlow() {
-  const [screen, setScreen] = useState<
-    "welcome" | "coach" | "goal" | "profile" | "dashboard" | "chat"
-  >("welcome");
+  const hasCompletedOnboarding = useUserStore(
+    (state) => state.hasCompletedOnboarding
+  );
+
+  const [hydrated, setHydrated] = useState(false);
+
+  const [screen, setScreen] = useState<Screen>("welcome");
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+
+    if (hasCompletedOnboarding) {
+      setScreen("dashboard");
+    } else {
+      setScreen("welcome");
+    }
+  }, [hydrated, hasCompletedOnboarding]);
+
+  if (!hydrated) {
+    return null;
+  }
 
   switch (screen) {
     case "welcome":

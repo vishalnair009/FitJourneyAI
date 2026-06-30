@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-
 import PrimaryButton from "../ui/PrimaryButton";
 import { useUserStore } from "../../app/store/userStore";
 
@@ -12,13 +11,16 @@ type ProfileSetupScreenProps = {
 export default function ProfileSetupScreen({
   onContinue,
 }: ProfileSetupScreenProps) {
-  const [name, setName] = useState("Vishal");
-  const [age, setAge] = useState("33");
-  const [height, setHeight] = useState("180");
-  const [weight, setWeight] = useState("98");
-  const [targetWeight, setTargetWeight] = useState("80");
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [targetWeight, setTargetWeight] = useState("");
 
   const updateUser = useUserStore((state) => state.updateUser);
+  const completeOnboarding = useUserStore(
+    (state) => state.completeOnboarding
+  );
 
   const isValid =
     name.trim() !== "" &&
@@ -29,7 +31,6 @@ export default function ProfileSetupScreen({
 
   return (
     <section className="min-h-screen bg-background flex items-center justify-center px-6">
-
       <div className="w-full max-w-md">
 
         {/* Heading */}
@@ -82,7 +83,7 @@ export default function ProfileSetupScreen({
 
         </div>
 
-        {/* Continue */}
+        {/* Continue Button */}
 
         <div className="mt-12">
           <PrimaryButton
@@ -96,6 +97,8 @@ export default function ProfileSetupScreen({
                 targetWeight: Number(targetWeight),
               });
 
+              completeOnboarding();
+
               onContinue();
             }}
           >
@@ -104,7 +107,6 @@ export default function ProfileSetupScreen({
         </div>
 
       </div>
-
     </section>
   );
 }

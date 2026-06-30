@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export type UserProfile = {
   name: string;
@@ -12,24 +13,57 @@ export type UserProfile = {
 type UserStore = {
   user: UserProfile;
 
+  hasCompletedOnboarding: boolean;
+
   updateUser: (data: Partial<UserProfile>) => void;
+
+  completeOnboarding: () => void;
+
+  resetUser: () => void;
 };
 
-export const useUserStore = create<UserStore>((set) => ({
-  user: {
-    name: "Vishal",
-    age: 33,
-    height: 180,
-    weight: 98,
-    targetWeight: 80,
-    goal: "Lose Weight",
-  },
-
-  updateUser: (data) =>
-    set((state) => ({
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set) => ({
       user: {
-        ...state.user,
-        ...data,
+        name: "",
+        age: 0,
+        height: 0,
+        weight: 0,
+        targetWeight: 0,
+        goal: "",
       },
-    })),
-}));
+
+      hasCompletedOnboarding: false,
+
+      updateUser: (data) =>
+        set((state) => ({
+          user: {
+            ...state.user,
+            ...data,
+          },
+        })),
+
+      completeOnboarding: () =>
+        set({
+          hasCompletedOnboarding: true,
+        }),
+
+      resetUser: () =>
+        set({
+          user: {
+            name: "",
+            age: 0,
+            height: 0,
+            weight: 0,
+            targetWeight: 0,
+            goal: "",
+          },
+          hasCompletedOnboarding: false,
+        }),
+    }),
+    {
+      name: "fitjourney-user",
+    }
+  )
+);

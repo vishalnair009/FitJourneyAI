@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import GoalCard from "./GoalCard";
 import PrimaryButton from "../ui/PrimaryButton";
+import { useUserStore } from "../../app/store/userStore";
 
 type GoalSelectionScreenProps = {
   onContinue: () => void;
@@ -14,9 +15,10 @@ export default function GoalSelectionScreen({
 }: GoalSelectionScreenProps) {
   const [selectedGoal, setSelectedGoal] = useState("");
 
+  const updateUser = useUserStore((state) => state.updateUser);
+
   return (
     <section className="min-h-screen bg-background flex items-center justify-center px-6">
-
       <div className="w-full max-w-md">
 
         {/* Heading */}
@@ -41,32 +43,32 @@ export default function GoalSelectionScreen({
             emoji="🔥"
             title="Lose Weight"
             description="Burn fat and become healthier."
-            selected={selectedGoal === "lose-weight"}
-            onClick={() => setSelectedGoal("lose-weight")}
+            selected={selectedGoal === "Lose Weight"}
+            onClick={() => setSelectedGoal("Lose Weight")}
           />
 
           <GoalCard
             emoji="💪"
             title="Build Muscle"
             description="Gain lean muscle and strength."
-            selected={selectedGoal === "build-muscle"}
-            onClick={() => setSelectedGoal("build-muscle")}
+            selected={selectedGoal === "Build Muscle"}
+            onClick={() => setSelectedGoal("Build Muscle")}
           />
 
           <GoalCard
             emoji="🏃"
             title="Improve Fitness"
             description="Increase stamina and endurance."
-            selected={selectedGoal === "improve-fitness"}
-            onClick={() => setSelectedGoal("improve-fitness")}
+            selected={selectedGoal === "Improve Fitness"}
+            onClick={() => setSelectedGoal("Improve Fitness")}
           />
 
           <GoalCard
             emoji="❤️"
             title="Live a Healthier Life"
             description="Feel energetic every day."
-            selected={selectedGoal === "healthy-life"}
-            onClick={() => setSelectedGoal("healthy-life")}
+            selected={selectedGoal === "Live a Healthier Life"}
+            onClick={() => setSelectedGoal("Live a Healthier Life")}
           />
 
         </div>
@@ -75,15 +77,20 @@ export default function GoalSelectionScreen({
 
         <div className="mt-12 w-60 mx-auto">
           <PrimaryButton
-            onClick={onContinue}
             disabled={!selectedGoal}
+            onClick={() => {
+              updateUser({
+                goal: selectedGoal,
+              });
+
+              onContinue();
+            }}
           >
             Continue
           </PrimaryButton>
         </div>
 
       </div>
-
     </section>
   );
 }
