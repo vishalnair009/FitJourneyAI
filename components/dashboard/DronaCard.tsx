@@ -15,18 +15,22 @@ export default function DronaCard({ onOpenChat }: DronaCardProps) {
       <div className="text-5xl mb-4">🤖</div>
 
       <h2 className="text-2xl font-bold">
-        Good Morning, {user.name}!
-      </h2>
+  Meet Drona 🤖
+</h2>
 
-      <p className="mt-4 text-green-100">
+<p className="mt-2 opacity-90">
+  Your personal AI fitness coach.
+</p>
+
+<p className="mt-4 opacity-90">
         Today's goal: <strong>{user.goal}</strong>
       </p>
 
-      <p className="mt-2 text-green-100">
+      <p className="mt-4 opacity-90">
         Current Weight: <strong>{user.weight} kg</strong>
       </p>
 
-      <p className="text-green-100">
+      <p className="mt-4 opacity-90">
         Target Weight: <strong>{user.targetWeight} kg</strong>
       </p>
 

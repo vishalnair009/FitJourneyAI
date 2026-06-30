@@ -13,50 +13,65 @@ export default function CoachIntroScreen({
   onContinue,
 }: CoachIntroScreenProps) {
   return (
-    <section className="min-h-screen flex justify-center bg-white">
-      <div className="w-full max-w-md px-6 py-10 flex flex-col items-center justify-center">
+    <section className="min-h-screen bg-background flex items-center justify-center px-6">
+
+      <div className="w-full max-w-md text-center">
+
+        {/* Avatar */}
 
         <FadeIn>
-          <DronaAvatar />
+          <div className="flex justify-center">
+            <DronaAvatar />
+          </div>
         </FadeIn>
 
+        {/* Greeting */}
+
         <FadeIn delay={0.2}>
-          <h1 className="mt-10 text-4xl font-bold text-center text-gray-900">
+          <h1 className="mt-10 text-4xl font-extrabold tracking-tight text-foreground">
             Hi Vishal 👋
           </h1>
         </FadeIn>
 
+        {/* Title */}
+
         <FadeIn delay={0.4}>
-          <h2 className="mt-4 text-2xl font-semibold text-center text-gray-800">
+          <h2 className="mt-5 text-2xl font-semibold text-foreground">
             <Typewriter text="I'm Drona, your AI fitness coach." />
           </h2>
         </FadeIn>
 
+        {/* Description */}
+
         <FadeIn delay={1.5}>
-          <p className="mt-8 text-center text-gray-600 leading-7">
-            I'm here to help you become healthier,
-            stronger and more confident.
+          <div className="mt-8 space-y-5 text-muted leading-8">
 
-            <br /><br />
+            <p>
+              I'm here to help you become healthier,
+              stronger and more confident.
+            </p>
 
-            No crash diets.
+            <p>
+              No crash diets.
+              <br />
+              No impossible routines.
+            </p>
 
-            <br />
+            <p>
+              Just one small step every day.
+            </p>
 
-            No impossible routines.
+            <p className="font-semibold text-foreground">
+              We'll do this together. 💪
+            </p>
 
-            <br /><br />
-
-            Just one small step every day.
-
-            <br /><br />
-
-            We'll do this together.
-          </p>
+          </div>
         </FadeIn>
 
+        {/* Button */}
+
         <FadeIn delay={2.5}>
-        <div className="mt-14 w-60 mx-auto">
+          <div className="mt-14 w-60 mx-auto">
             <PrimaryButton onClick={onContinue}>
               Let's Begin
             </PrimaryButton>
@@ -64,6 +79,7 @@ export default function CoachIntroScreen({
         </FadeIn>
 
       </div>
+
     </section>
   );
 }

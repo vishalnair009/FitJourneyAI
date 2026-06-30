@@ -15,20 +15,25 @@ export default function GoalSelectionScreen({
   const [selectedGoal, setSelectedGoal] = useState("");
 
   return (
-    <section className="min-h-screen bg-white flex justify-center">
-      <div className="w-full max-w-md px-6 py-10">
+    <section className="min-h-screen bg-background flex items-center justify-center px-6">
 
-        <h1 className="text-4xl font-bold leading-tight text-gray-900">
+      <div className="w-full max-w-md">
+
+        {/* Heading */}
+
+        <h1 className="text-4xl font-extrabold tracking-tight text-foreground">
           What's your
           <br />
           main goal?
         </h1>
 
-        <p className="mt-4 text-gray-500">
-          Choose one for now.
+        <p className="mt-4 text-lg leading-7 text-muted">
+          Choose the goal you want to focus on first.
           <br />
           You can always change it later.
         </p>
+
+        {/* Goal Cards */}
 
         <div className="mt-10 space-y-4">
 
@@ -66,15 +71,19 @@ export default function GoalSelectionScreen({
 
         </div>
 
-        <div className="mt-12 flex justify-center">
-          <div className="w-60">
-            <PrimaryButton onClick={onContinue}>
-              Continue
-            </PrimaryButton>
-          </div>
+        {/* Continue Button */}
+
+        <div className="mt-12 w-60 mx-auto">
+          <PrimaryButton
+            onClick={onContinue}
+            disabled={!selectedGoal}
+          >
+            Continue
+          </PrimaryButton>
         </div>
 
       </div>
+
     </section>
   );
 }

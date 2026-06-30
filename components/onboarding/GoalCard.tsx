@@ -1,53 +1,70 @@
 type GoalCardProps = {
-    emoji: string;
-    title: string;
-    description: string;
-    onClick: () => void;
-    selected: boolean;
-  };
-  
-  export default function GoalCard({
-    emoji,
-    title,
-    description,
-    onClick,
-    selected,
-  }: GoalCardProps) {
-    return (
-      <button
+  emoji: string;
+  title: string;
+  description: string;
+  onClick: () => void;
+  selected: boolean;
+};
+
+export default function GoalCard({
+  emoji,
+  title,
+  description,
+  onClick,
+  selected,
+}: GoalCardProps) {
+  return (
+    <button
       onClick={onClick}
       className={`
+        relative
         w-full
         rounded-3xl
+        border
         p-5
         text-left
         transition-all
         duration-300
-        border
+        hover:-translate-y-1
+        hover:shadow-xl
         ${
           selected
-            ? "border-green-600 bg-green-50 shadow-lg"
-            : "border-gray-200 bg-white hover:border-green-500 hover:shadow-lg"
+            ? "border-green-500 bg-green-50 dark:bg-green-900/20 shadow-xl"
+            : "border-border bg-card"
         }
       `}
-      >
-        <div className="flex items-center gap-4">
-  
-          <div className="text-4xl">
-            {emoji}
-          </div>
-  
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900">
-              {title}
-            </h3>
-  
-            <p className="mt-1 text-gray-500">
-              {description}
-            </p>
-          </div>
-  
+    >
+      {/* Selected Badge */}
+
+      {selected && (
+        <div className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-sm text-white">
+          ✓
         </div>
-      </button>
-    );
-  }
+      )}
+
+      <div className="flex items-center gap-5">
+
+        {/* Emoji */}
+
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-green-100 dark:bg-green-900/30 text-3xl">
+          {emoji}
+        </div>
+
+        {/* Text */}
+
+        <div className="flex-1">
+
+          <h3 className="text-xl font-bold text-card-foreground">
+            {title}
+          </h3>
+
+          <p className="mt-2 text-sm leading-6 text-muted">
+            {description}
+          </p>
+
+        </div>
+
+      </div>
+    </button>
+  );
+}

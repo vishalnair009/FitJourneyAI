@@ -1,12 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import CoachCard from "./CoachCard";
+import DronaCard from "./DronaCard";
+import MissionCard from "./MissionCard";
+import ProgressCard from "./ProgressCard";
+
 import { useUserStore } from "../../app/store/userStore";
 import { useDailyStore } from "../../app/store/dailyStore";
-import ProgressCard from "./ProgressCard";
-import MissionCard from "./MissionCard";
-import DronaCard from "./DronaCard";
-import { useEffect, useState } from "react";
 import { getDailyBrief } from "../../app/services/dashboardAI";
 
 type DashboardScreenProps = {
@@ -18,61 +20,72 @@ export default function DashboardScreen({
 }: DashboardScreenProps) {
   const user = useUserStore((state) => state.user);
   const progress = useDailyStore((state) => state.progress);
+
+  const setWater = useDailyStore((state) => state.setWater);
+
   const [dailyBrief, setDailyBrief] = useState(
     "🤖 Drona is preparing your daily briefing..."
   );
+
   useEffect(() => {
-    console.log("Loading AI briefing...");
-  
     async function loadBrief() {
       try {
         const brief = await getDailyBrief(user, progress);
-  
-        console.log("Brief received:", brief);
-  
         setDailyBrief(brief);
-      } catch (err) {
-        console.error("Dashboard Error:", err);
-  
+      } catch {
         setDailyBrief(
           "Good morning! Let's have a fantastic day and stay consistent. 💪"
         );
       }
     }
-  
+
     loadBrief();
   }, []);
 
-
-  const setWater = useDailyStore((state) => state.setWater);
-
   return (
-    <section className="min-h-screen bg-gray-100">
-      <div className="max-w-md mx-auto px-6 py-10">
+    <section className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto max-w-md px-6 py-10">
 
-        <h1 className="text-3xl font-bold">
-          Good Morning, {user.name} 👋
-        </h1>
+        {/* Header */}
 
-        <div className="mt-6">
+        <div className="mb-8">
+          <h1 className="text-4xl font-extrabold tracking-tight text-foreground">
+            Good Morning, {user.name} 👋
+          </h1>
+
+          <p className="mt-2 text-muted">
+            Every healthy choice today brings you closer to your goal.
+          </p>
+        </div>
+
+        {/* Drona */}
+
+        <div className="mb-6">
           <DronaCard onOpenChat={onOpenChat} />
         </div>
-        <div className="mt-6">
-  <CoachCard message={dailyBrief} />
-</div>
 
-        <div className="mt-8">
+        {/* AI Brief */}
+
+        <div className="mb-8">
+          <CoachCard message={dailyBrief} />
+        </div>
+
+        {/* Mission */}
+
+        <div className="mb-8">
           <MissionCard />
         </div>
 
-        <div className="mt-6">
+        {/* Progress */}
+
+        <div className="mb-8">
           <ProgressCard
             currentWeight={user.weight}
             targetWeight={user.targetWeight}
           />
         </div>
 
-        <div className="mt-6 space-y-4">
+        <div className="space-y-5">
 
           <DashboardCard
             title="🎯 Goal"
@@ -89,45 +102,42 @@ export default function DashboardScreen({
             value={`${user.targetWeight} kg`}
           />
 
-<div className="bg-white rounded-2xl p-5 shadow-sm border">
+          {/* Water */}
 
-  <h3 className="text-gray-500 text-sm">
-    💧 Water Intake
-  </h3>
+          <div className="rounded-3xl bg-card border border-border shadow-lg p-6">
 
-  <p className="text-2xl font-bold mt-2">
-    {progress.water.toFixed(2)} L / 4 L
-  </p>
+            <h3 className="text-sm font-medium text-muted">
+              💧 Water Intake
+            </h3>
 
-  <button
-    onClick={() =>
-      setWater(
-        Math.min(
-          progress.water + 0.25,
-          4
-        )
-      )
-    }
-    className="mt-4 w-full rounded-xl bg-blue-500 text-white py-3 hover:bg-blue-600 transition"
-  >
-    +250 ml
-  </button>
+            <p className="mt-2 text-3xl font-bold text-card-foreground">
+              {progress.water.toFixed(2)} L / 4 L
+            </p>
 
-</div>
+            <button
+              onClick={() =>
+                setWater(Math.min(progress.water + 0.25, 4))
+              }
+              className="mt-5 w-full rounded-2xl bg-blue-500 py-3 font-semibold text-white transition hover:bg-blue-600"
+            >
+              +250 ml
+            </button>
 
-<DashboardCard
-  title="👣 Steps"
-  value={`${progress.steps} / 8000`}
-/>
+          </div>
 
-<DashboardCard
-  title="🏋 Workout"
-  value={
-    progress.workoutCompleted
-      ? "Completed ✅"
-      : "Not Started"
-  }
-/>
+          <DashboardCard
+            title="👣 Steps"
+            value={`${progress.steps} / 8000`}
+          />
+
+          <DashboardCard
+            title="🏋 Workout"
+            value={
+              progress.workoutCompleted
+                ? "Completed ✅"
+                : "Not Started"
+            }
+          />
 
           <DashboardCard
             title="🔥 Current Streak"
@@ -135,7 +145,6 @@ export default function DashboardScreen({
           />
 
         </div>
-
       </div>
     </section>
   );
@@ -151,14 +160,16 @@ function DashboardCard({
   value,
 }: DashboardCardProps) {
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm border">
-      <h3 className="text-gray-500 text-sm">
+    <div className="rounded-3xl bg-card border border-border shadow-lg p-6">
+
+      <h3 className="text-sm font-medium text-muted">
         {title}
       </h3>
 
-      <p className="text-2xl font-bold mt-2">
+      <p className="mt-2 text-3xl font-bold text-card-foreground">
         {value}
       </p>
+
     </div>
   );
 }

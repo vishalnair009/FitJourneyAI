@@ -1,6 +1,5 @@
 "use client";
 
-
 type CoachCardProps = {
   message: string;
 };
@@ -9,17 +8,35 @@ export default function CoachCard({
   message,
 }: CoachCardProps) {
   return (
-    <div className="bg-gradient-to-r from-emerald-600 to-green-700 text-white rounded-3xl p-6 shadow-lg">
+    <div className="rounded-3xl border border-border bg-card p-6 shadow-xl">
 
-      <div className="text-4xl">
-        🤖
+      {/* Header */}
+
+      <div className="flex items-center gap-4">
+
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 dark:bg-green-900/40 text-3xl">
+          🤖
+        </div>
+
+        <div>
+          <h2 className="text-xl font-bold text-card-foreground">
+            Drona's Daily Briefing
+          </h2>
+
+          <p className="mt-1 text-sm text-muted">
+            Personalized insights for today
+          </p>
+        </div>
+
       </div>
 
-      <h2 className="text-xl font-bold mt-3">
-        Drona's Daily Briefing
-      </h2>
+      {/* Divider */}
 
-      <p className="mt-4 whitespace-pre-wrap leading-7 text-green-50">
+      <div className="my-5 h-px bg-border" />
+
+      {/* Message */}
+
+      <p className="whitespace-pre-wrap leading-8 text-card-foreground">
         {message}
       </p>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import PrimaryButton from "../ui/PrimaryButton";
 import { useUserStore } from "../../app/store/userStore";
 
@@ -16,86 +17,133 @@ export default function ProfileSetupScreen({
   const [height, setHeight] = useState("180");
   const [weight, setWeight] = useState("98");
   const [targetWeight, setTargetWeight] = useState("80");
+
   const updateUser = useUserStore((state) => state.updateUser);
 
   const isValid =
-    name &&
-    age &&
-    height &&
-    weight &&
-    targetWeight;
+    name.trim() !== "" &&
+    age.trim() !== "" &&
+    height.trim() !== "" &&
+    weight.trim() !== "" &&
+    targetWeight.trim() !== "";
 
   return (
-    <section className="min-h-screen bg-white flex justify-center">
-      <div className="w-full max-w-md px-6 py-10">
+    <section className="min-h-screen bg-background flex items-center justify-center px-6">
 
-        <h1 className="text-4xl font-bold text-center text-gray-900">
+      <div className="w-full max-w-md">
+
+        {/* Heading */}
+
+        <h1 className="text-4xl font-extrabold tracking-tight text-center text-foreground">
           Tell us about yourself
         </h1>
 
-        <p className="text-center text-gray-500 mt-3">
-          This helps Drona personalize your journey.
+        <p className="mt-3 text-center text-lg text-muted">
+          This helps Drona personalize your fitness journey.
         </p>
+
+        {/* Form */}
 
         <div className="mt-10 space-y-5">
 
-          <input
-            className="w-full border rounded-xl p-4"
-            placeholder="Name"
+          <InputField
+            placeholder="Your Name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={setName}
           />
 
-          <input
-            className="w-full border rounded-xl p-4"
+          <InputField
             placeholder="Age"
             value={age}
-            onChange={(e) => setAge(e.target.value)}
+            onChange={setAge}
+            type="number"
           />
 
-          <input
-            className="w-full border rounded-xl p-4"
+          <InputField
             placeholder="Height (cm)"
             value={height}
-            onChange={(e) => setHeight(e.target.value)}
+            onChange={setHeight}
+            type="number"
           />
 
-          <input
-            className="w-full border rounded-xl p-4"
+          <InputField
             placeholder="Current Weight (kg)"
             value={weight}
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={setWeight}
+            type="number"
           />
 
-          <input
-            className="w-full border rounded-xl p-4"
+          <InputField
             placeholder="Target Weight (kg)"
             value={targetWeight}
-            onChange={(e) => setTargetWeight(e.target.value)}
+            onChange={setTargetWeight}
+            type="number"
           />
 
         </div>
 
-        <div className="mt-10">
-        <PrimaryButton
-  disabled={!isValid}
-  onClick={() => {
-    updateUser({
-      name,
-      age: Number(age),
-      height: Number(height),
-      weight: Number(weight),
-      targetWeight: Number(targetWeight),
-    });
+        {/* Continue */}
 
-    onContinue();
-  }}
->
-  Continue
-</PrimaryButton>
+        <div className="mt-12">
+          <PrimaryButton
+            disabled={!isValid}
+            onClick={() => {
+              updateUser({
+                name,
+                age: Number(age),
+                height: Number(height),
+                weight: Number(weight),
+                targetWeight: Number(targetWeight),
+              });
+
+              onContinue();
+            }}
+          >
+            Continue
+          </PrimaryButton>
         </div>
 
       </div>
+
     </section>
+  );
+}
+
+type InputFieldProps = {
+  placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+  type?: string;
+};
+
+function InputField({
+  placeholder,
+  value,
+  onChange,
+  type = "text",
+}: InputFieldProps) {
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="
+        w-full
+        rounded-2xl
+        border
+        border-border
+        bg-card
+        px-5
+        py-4
+        text-card-foreground
+        placeholder:text-muted
+        outline-none
+        transition-all
+        focus:border-green-500
+        focus:ring-4
+        focus:ring-green-500/20
+      "
+    />
   );
 }

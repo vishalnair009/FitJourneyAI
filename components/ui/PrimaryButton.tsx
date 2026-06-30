@@ -18,19 +18,24 @@ export default function PrimaryButton({
       onClick={onClick}
       disabled={disabled}
       className={`
-        h-14
         w-full
+        h-14
         rounded-full
-        bg-green-600
-        hover:bg-green-700
-        disabled:bg-gray-300
-        disabled:cursor-not-allowed
-        text-white
         font-semibold
         text-lg
+        text-white
+        shadow-lg
         transition-all
+        duration-200
+        hover:scale-[1.02]
+        active:scale-[0.98]
+        disabled:opacity-50
+        disabled:cursor-not-allowed
         ${className}
       `}
+      style={{
+        background: "var(--primary)",
+      }}
     >
       {children}
     </button>
