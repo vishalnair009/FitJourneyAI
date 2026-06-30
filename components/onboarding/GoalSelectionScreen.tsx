@@ -66,13 +66,12 @@ export default function GoalSelectionScreen({
 
         </div>
 
-        <div className="mt-10">
-          <PrimaryButton
-            disabled={!selectedGoal}
-            onClick={onContinue}
-          >
-            Continue
-          </PrimaryButton>
+        <div className="mt-12 flex justify-center">
+          <div className="w-60">
+            <PrimaryButton onClick={onContinue}>
+              Continue
+            </PrimaryButton>
+          </div>
         </div>
 
       </div>

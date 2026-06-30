@@ -55,15 +55,11 @@ Instructions:
     });
 
   } catch (error) {
-    console.error(error);
-
-    return NextResponse.json(
-      {
-        brief: "Good morning! Let's make today count. 💪",
-      },
-      {
-        status: 500,
-      }
-    );
+    console.error("Dashboard Error:", error);
+  
+    return NextResponse.json({
+      brief:
+        "Good morning! Let's make today count. 💪 Drona is temporarily unavailable, but your dashboard is ready.",
+    });
   }
-}
+  }

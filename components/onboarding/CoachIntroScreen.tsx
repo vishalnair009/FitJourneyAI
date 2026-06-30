@@ -56,7 +56,7 @@ export default function CoachIntroScreen({
         </FadeIn>
 
         <FadeIn delay={2.5}>
-          <div className="mt-14 w-full">
+        <div className="mt-14 w-60 mx-auto">
             <PrimaryButton onClick={onContinue}>
               Let's Begin
             </PrimaryButton>
