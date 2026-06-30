@@ -1,26 +1,36 @@
 "use client";
 
+import { useDailyStore } from "../../app/store/dailyStore";
+
 export default function MissionCard() {
+  const progress = useDailyStore((state) => state.progress);
+
   const missions = [
     {
       title: "Drink 4 Litres of Water",
-      completed: false,
       emoji: "💧",
+      completed: progress.water >= 4,
+      subtitle: `${progress.water.toFixed(2)} / 4 L`,
     },
     {
       title: "Walk 8,000 Steps",
-      completed: false,
       emoji: "👣",
+      completed: progress.steps >= 8000,
+      subtitle: `${progress.steps} / 8000`,
     },
     {
       title: "Complete Today's Workout",
-      completed: false,
       emoji: "🏋️",
+      completed: progress.workoutCompleted,
+      subtitle: progress.workoutCompleted
+        ? "Workout Completed"
+        : "Not Started",
     },
     {
       title: "Stay Within Calorie Goal",
-      completed: false,
       emoji: "🥗",
+      completed: false,
+      subtitle: "Coming Soon",
     },
   ];
 
@@ -28,7 +38,9 @@ export default function MissionCard() {
     (mission) => mission.completed
   ).length;
 
-  const progress = (completedCount / missions.length) * 100;
+  const percentage = Math.round(
+    (completedCount / missions.length) * 100
+  );
 
   return (
     <div className="rounded-3xl border border-border bg-card p-6 shadow-xl">
@@ -41,43 +53,55 @@ export default function MissionCard() {
         </h2>
 
         <p className="mt-1 text-sm text-muted">
-          Complete all four missions to keep your streak alive.
+          Complete your daily goals to stay on track.
         </p>
       </div>
 
-      {/* Missions */}
+      {/* Mission List */}
 
       <div className="mt-8 space-y-4">
 
         {missions.map((mission) => (
           <div
             key={mission.title}
-            className="flex items-center justify-between rounded-2xl border border-border bg-background px-4 py-4 transition hover:shadow-md"
+            className={`
+              flex
+              items-center
+              justify-between
+              rounded-2xl
+              border
+              p-4
+              transition-all
+              duration-300
+              ${
+                mission.completed
+                  ? "border-green-500 bg-green-50 dark:bg-green-900/20"
+                  : "border-border bg-background"
+              }
+            `}
           >
             <div className="flex items-center gap-4">
 
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 dark:bg-green-900/40 text-2xl">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 dark:bg-green-900/30 text-2xl">
                 {mission.emoji}
               </div>
 
               <div>
-                <p className="font-semibold text-card-foreground">
+                <h3 className="font-semibold text-card-foreground">
                   {mission.title}
-                </p>
+                </h3>
 
                 <p className="text-sm text-muted">
-                  {mission.completed
-                    ? "Completed"
-                    : "Pending"}
+                  {mission.subtitle}
                 </p>
               </div>
 
             </div>
 
             {mission.completed ? (
-              <div className="text-2xl">✅</div>
+              <div className="text-3xl">✅</div>
             ) : (
-              <div className="h-6 w-6 rounded-full border-2 border-border" />
+              <div className="h-7 w-7 rounded-full border-2 border-border" />
             )}
 
           </div>
@@ -85,14 +109,14 @@ export default function MissionCard() {
 
       </div>
 
-      {/* Progress */}
+      {/* Overall Progress */}
 
       <div className="mt-8">
 
-        <div className="mb-3 flex items-center justify-between">
+        <div className="mb-3 flex justify-between">
 
           <span className="text-sm font-medium text-muted">
-            Today's Progress
+            Overall Progress
           </span>
 
           <span className="font-bold text-card-foreground">
@@ -104,9 +128,9 @@ export default function MissionCard() {
         <div className="h-3 overflow-hidden rounded-full bg-muted/30">
 
           <div
-            className="h-full rounded-full bg-green-600 transition-all duration-500"
+            className="h-full rounded-full bg-green-600 transition-all duration-700"
             style={{
-              width: `${progress}%`,
+              width: `${percentage}%`,
             }}
           />
 

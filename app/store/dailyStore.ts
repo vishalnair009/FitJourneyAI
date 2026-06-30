@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export type DailyProgress = {
   water: number;
@@ -12,58 +13,100 @@ type DailyStore = {
   progress: DailyProgress;
 
   setWater: (water: number) => void;
+  addWater: (amount: number) => void;
+
   setSteps: (steps: number) => void;
+  addSteps: (steps: number) => void;
+
   setSleep: (sleep: number) => void;
+
   setWorkoutCompleted: (completed: boolean) => void;
+
   setWeight: (weight: number) => void;
+
+  resetProgress: () => void;
 };
 
-export const useDailyStore = create<DailyStore>((set) => ({
-  progress: {
-    water: 0,
-    steps: 0,
-    sleep: 0,
-    workoutCompleted: false,
-    weight: 0,
-  },
-
-  setWater: (water) =>
-    set((state) => ({
+export const useDailyStore = create<DailyStore>()(
+  persist(
+    (set) => ({
       progress: {
-        ...state.progress,
-        water,
+        water: 0,
+        steps: 0,
+        sleep: 0,
+        workoutCompleted: false,
+        weight: 0,
       },
-    })),
 
-  setSteps: (steps) =>
-    set((state) => ({
-      progress: {
-        ...state.progress,
-        steps,
-      },
-    })),
+      setWater: (water) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            water,
+          },
+        })),
 
-  setSleep: (sleep) =>
-    set((state) => ({
-      progress: {
-        ...state.progress,
-        sleep,
-      },
-    })),
+      addWater: (amount) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            water: Math.min(state.progress.water + amount, 10),
+          },
+        })),
 
-  setWorkoutCompleted: (completed) =>
-    set((state) => ({
-      progress: {
-        ...state.progress,
-        workoutCompleted: completed,
-      },
-    })),
+      setSteps: (steps) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            steps,
+          },
+        })),
 
-  setWeight: (weight) =>
-    set((state) => ({
-      progress: {
-        ...state.progress,
-        weight,
-      },
-    })),
-}));
+      addSteps: (steps) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            steps: state.progress.steps + steps,
+          },
+        })),
+
+      setSleep: (sleep) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            sleep,
+          },
+        })),
+
+      setWorkoutCompleted: (completed) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            workoutCompleted: completed,
+          },
+        })),
+
+      setWeight: (weight) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            weight,
+          },
+        })),
+
+      resetProgress: () =>
+        set({
+          progress: {
+            water: 0,
+            steps: 0,
+            sleep: 0,
+            workoutCompleted: false,
+            weight: 0,
+          },
+        }),
+    }),
+    {
+      name: "fitjourney-progress",
+    }
+  )
+);
