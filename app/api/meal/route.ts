@@ -7,27 +7,34 @@ const ai = new GoogleGenAI({
 
 export async function POST(request: Request) {
   try {
-    const { description } = await request.json();
+    const { description, mealType } = await request.json();
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: `
-You are an expert nutritionist.
+You are Drona, an expert AI nutrition coach.
 
-Analyze this meal:
+Analyze the following meal.
 
+Meal Type:
+${mealType}
+
+Description:
 ${description}
+
+Estimate nutritional values realistically.
 
 Return ONLY valid JSON.
 
 {
-  "mealType": "Breakfast",
+  "mealType": "${mealType}",
+  "description": "${description}",
   "calories": 450,
   "protein": 25,
   "carbs": 45,
   "fat": 16,
-  "score": 4,
-  "advice": "Great protein and complex carbs. Add fruit or vegetables for more fiber."
+  "healthScore": 8,
+  "advice": "Great protein intake. Try adding vegetables for more fibre."
 }
 `,
     });
@@ -39,23 +46,22 @@ Return ONLY valid JSON.
       .replace(/```/g, "")
       .trim();
 
-    return NextResponse.json({
-      result: text,
-    });
+    const meal = JSON.parse(text);
+
+    return NextResponse.json(meal);
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        result: JSON.stringify({
-          mealType: "Unknown",
-          calories: 0,
-          protein: 0,
-          carbs: 0,
-          fat: 0,
-          score: 0,
-          advice: "Unable to analyze meal right now.",
-        }),
+        mealType: "Unknown",
+        description: "",
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        healthScore: 0,
+        advice: "Unable to analyze the meal right now.",
       },
       {
         status: 500,
