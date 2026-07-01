@@ -1,5 +1,8 @@
 "use client";
 
+import Image from "next/image";
+
+import FadeIn from "../animations/FadeIn";
 import PrimaryButton from "../ui/PrimaryButton";
 
 type WelcomeScreenProps = {
@@ -10,45 +13,52 @@ export default function WelcomeScreen({
   onContinue,
 }: WelcomeScreenProps) {
   return (
-    <section className="min-h-screen bg-background flex items-center justify-center px-6">
+    <section className="min-h-screen bg-background flex items-center justify-center">
 
-      <div className="w-full max-w-md text-center">
+      <div className="w-full max-w-md px-8 flex flex-col items-center">
 
-        {/* Logo */}
+        <FadeIn>
 
-        <div className="flex justify-center">
-          <div className="flex h-28 w-28 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 shadow-lg">
-            <span className="text-6xl">💪</span>
+          <Image
+            src="/branding/logo.png"
+            alt="FitJourney AI"
+            width={170}
+            height={170}
+            priority
+            className="drop-shadow-xl"
+          />
+
+        </FadeIn>
+
+        <FadeIn delay={0.2}>
+
+          <h1 className="mt-10 text-center text-5xl font-extrabold tracking-tight text-foreground">
+            FitJourney AI
+          </h1>
+
+        </FadeIn>
+
+        <FadeIn delay={0.4}>
+
+          <p className="mt-6 max-w-sm text-center text-lg leading-8 text-muted">
+            Build Better Habits.
+            <br />
+            One Day at a Time.
+          </p>
+
+        </FadeIn>
+
+        <FadeIn delay={0.6}>
+
+          <div className="mt-16 w-64">
+
+            <PrimaryButton onClick={onContinue}>
+              Let's Begin
+            </PrimaryButton>
+
           </div>
-        </div>
 
-        {/* App Name */}
-
-        <h1 className="mt-10 text-5xl font-extrabold tracking-tight text-foreground">
-          FitJourney AI
-        </h1>
-
-        {/* Tagline */}
-
-        <p className="mt-6 text-lg leading-8 text-muted">
-          Your personal AI fitness coach that helps you
-          build healthy habits, lose weight and stay
-          motivated every single day.
-        </p>
-
-        {/* Button */}
-
-        <div className="mt-14 w-60 mx-auto">
-          <PrimaryButton onClick={onContinue}>
-            Let's Begin
-          </PrimaryButton>
-        </div>
-
-        {/* Version */}
-
-        <p className="mt-10 text-sm text-muted">
-          Powered by Drona AI
-        </p>
+        </FadeIn>
 
       </div>
 

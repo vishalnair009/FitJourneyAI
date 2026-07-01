@@ -1,10 +1,10 @@
 "use client";
 
-import DronaAvatar from "../ui/DronaAvatar";
-import PrimaryButton from "../ui/PrimaryButton";
+import Image from "next/image";
+
 import FadeIn from "../animations/FadeIn";
 import Typewriter from "../animations/Typewriter";
-import { useUserStore } from "../../app/store/userStore";
+import PrimaryButton from "../ui/PrimaryButton";
 
 type CoachIntroScreenProps = {
   onContinue: () => void;
@@ -13,63 +13,82 @@ type CoachIntroScreenProps = {
 export default function CoachIntroScreen({
   onContinue,
 }: CoachIntroScreenProps) {
-
-  const user = useUserStore((state) => state.user);
-
   return (
-    <section className="min-h-screen bg-background flex items-center justify-center px-6">
+    <section className="min-h-screen bg-background flex justify-center">
 
-      <div className="w-full max-w-md text-center">
+      <div className="w-full max-w-md px-6 py-10 flex flex-col items-center justify-center">
 
         <FadeIn>
-          <div className="flex justify-center">
-            <DronaAvatar />
-          </div>
+
+          <Image
+            src="/branding/drona/coach.png"
+            alt="Drona AI Coach"
+            width={240}
+            height={240}
+            priority
+            className="drop-shadow-2xl"
+          />
+
         </FadeIn>
 
         <FadeIn delay={0.2}>
-          <h1 className="mt-10 text-4xl font-extrabold tracking-tight text-foreground">
-            Hi {user.name || "there"} 👋
+
+          <h1 className="mt-8 text-center text-4xl font-bold text-foreground">
+            Meet Drona 👋
           </h1>
+
         </FadeIn>
 
         <FadeIn delay={0.4}>
-          <h2 className="mt-5 text-2xl font-semibold text-foreground">
-            <Typewriter text="I'm Drona, your AI fitness coach." />
+
+          <h2 className="mt-4 text-center text-2xl font-semibold text-foreground">
+            <Typewriter text="Your Personal AI Fitness Coach" />
           </h2>
+
         </FadeIn>
 
-        <FadeIn delay={1.5}>
-          <div className="mt-8 space-y-5 text-muted leading-8">
+        <FadeIn delay={1.4}>
 
-            <p>
-              I'm here to help you become healthier,
-              stronger and more confident.
-            </p>
+          <p className="mt-8 text-center leading-8 text-muted">
 
-            <p>
-              No crash diets.
-              <br />
-              No impossible routines.
-            </p>
+            I'm here to guide you every day.
 
-            <p>
-              Just one small step every day.
-            </p>
+            <br /><br />
 
-            <p className="font-semibold text-foreground">
-              We'll do this together. 💪
-            </p>
+            We'll build healthier habits together.
 
-          </div>
+            <br /><br />
+
+            No crash diets.
+
+            <br />
+
+            No impossible routines.
+
+            <br /><br />
+
+            Just consistent progress.
+
+            <br /><br />
+
+            One day at a time.
+
+          </p>
+
         </FadeIn>
 
-        <FadeIn delay={2.5}>
-          <div className="mt-14 w-60 mx-auto">
-            <PrimaryButton onClick={onContinue}>
-              Let's Begin
+        <FadeIn delay={2.2}>
+
+          <div className="mt-14 w-64">
+
+            <PrimaryButton
+              onClick={onContinue}
+            >
+              Continue
             </PrimaryButton>
+
           </div>
+
         </FadeIn>
 
       </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import DronaAvatar from "../ui/DronaAvatar";
+
 type CoachCardProps = {
   message: string;
 };
@@ -10,35 +12,34 @@ export default function CoachCard({
   return (
     <div className="rounded-3xl border border-border bg-card p-6 shadow-xl">
 
-      {/* Header */}
+      <div className="flex items-start gap-4">
 
-      <div className="flex items-center gap-4">
+        <DronaAvatar
+          mood="coach"
+          size="md"
+        />
 
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 dark:bg-green-900/40 text-3xl">
-          🤖
-        </div>
+        <div className="flex-1">
 
-        <div>
-          <h2 className="text-xl font-bold text-card-foreground">
-            Drona's Daily Briefing
-          </h2>
+          <div className="flex items-center gap-2">
 
-          <p className="mt-1 text-sm text-muted">
-            Personalized insights for today
+            <h2 className="text-xl font-bold text-card-foreground">
+              Drona
+            </h2>
+
+            <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">
+              AI Coach
+            </span>
+
+          </div>
+
+          <p className="mt-4 whitespace-pre-line leading-8 text-muted">
+            {message}
           </p>
+
         </div>
 
       </div>
-
-      {/* Divider */}
-
-      <div className="my-5 h-px bg-border" />
-
-      {/* Message */}
-
-      <p className="whitespace-pre-wrap leading-8 text-card-foreground">
-        {message}
-      </p>
 
     </div>
   );

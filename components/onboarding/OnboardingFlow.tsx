@@ -7,7 +7,8 @@ import CoachIntroScreen from "./CoachIntroScreen";
 import GoalSelectionScreen from "./GoalSelectionScreen";
 import ProfileSetupScreen from "./ProfileSetupScreen";
 import DashboardScreen from "../dashboard/DashboardScreen";
-import ChatScreen from "../chat/ChatScreen";
+import AppShell from "../AppShell";
+
 
 import { useUserStore } from "../../app/store/userStore";
 
@@ -16,8 +17,7 @@ type Screen =
   | "coach"
   | "goal"
   | "profile"
-  | "dashboard"
-  | "chat";
+  | "dashboard";
 
 export default function OnboardingFlow() {
   const hasCompletedOnboarding = useUserStore(
@@ -75,19 +75,8 @@ export default function OnboardingFlow() {
         />
       );
 
-    case "dashboard":
-      return (
-        <DashboardScreen
-          onOpenChat={() => setScreen("chat")}
-        />
-      );
-
-    case "chat":
-      return (
-        <ChatScreen
-          onBack={() => setScreen("dashboard")}
-        />
-      );
+      case "dashboard":
+        return <AppShell />;
 
     default:
       return null;

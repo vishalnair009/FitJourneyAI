@@ -1,36 +1,249 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💪 FitJourney AI
 
-## Getting Started
+> **Your Personal AI Fitness Coach**
 
-First, run the development server:
+FitJourney AI is an AI-powered fitness companion that helps users build healthier habits through personalized coaching, intelligent meal analysis, daily progress tracking, and motivational insights.
+
+Built using **Next.js**, **TypeScript**, **Tailwind CSS**, **Zustand**, and **Google Gemini AI**.
+
+---
+
+## ✨ Features
+
+### 🤖 AI Coach – Drona
+- Personalized AI fitness coach
+- Daily motivational briefing
+- Nutrition guidance
+- Fitness Q&A powered by Gemini AI
+
+### 🍽 AI Meal Analysis
+- Describe your meal in plain English
+- Automatic calorie estimation
+- Protein, carbs and fat breakdown
+- Health score
+- Personalized nutrition advice
+
+### 📊 Dashboard
+- Daily Progress
+- Mission Tracker
+- Weight Progress
+- Daily Tracker
+- Meal Summary
+- AI Daily Brief
+
+### 👤 User Profile
+- Guided onboarding
+- Fitness goal selection
+- Weight tracking
+- Persistent profile
+
+### 💾 Persistent Storage
+- User profile
+- Daily progress
+- Meal history
+
+Everything is stored locally using Zustand Persist.
+
+---
+
+# 🖥 Screenshots
+
+> Screenshots will be added in Version 1.0 Release.
+
+- Welcome Screen
+- Dashboard
+- AI Chat
+- Meal Analysis
+- Dark Mode
+
+---
+
+# 🚀 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 16 | React Framework |
+| React 19 | UI |
+| TypeScript | Type Safety |
+| Tailwind CSS | Styling |
+| Zustand | State Management |
+| Google Gemini AI | AI Coach & Meal Analysis |
+| Vercel | Deployment |
+
+---
+
+# 🏗 Architecture
+
+```
+User
+
+│
+
+├── Onboarding
+
+│
+
+├── Dashboard
+
+│      ├── Daily Progress
+│      ├── Missions
+│      ├── Weight Tracker
+│      ├── Daily Tracker
+│      └── Meal Summary
+
+│
+
+├── Drona AI
+
+│      ├── Daily Brief
+│      ├── AI Chat
+│      └── Meal Analysis
+
+│
+
+└── Zustand Stores
+
+       ├── User Store
+       ├── Daily Store
+       └── Meal Store
+```
+
+---
+
+# 📂 Project Structure
+
+```
+app/
+components/
+    animations/
+    chat/
+    dashboard/
+    meals/
+    onboarding/
+    ui/
+
+store/
+services/
+public/
+```
+
+---
+
+# ⚙ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/vishalnair009/FitJourneyAI.git
+```
+
+Go into the project
+
+```bash
+cd FitJourneyAI
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Create a `.env.local`
+
+```env
+GEMINI_API_KEY=YOUR_API_KEY
+```
+
+Run the application
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# 🌐 Live Demo
 
-To learn more about Next.js, take a look at the following resources:
+**Vercel Deployment**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> Add your production URL here after release.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+# 🛣 Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## ✅ Version 1.0
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- AI Coach
+- AI Daily Brief
+- AI Meal Analysis
+- Dashboard
+- Daily Tracker
+- Mission Tracker
+- Weight Progress
+- Persistent User Profile
+- Dark Mode
+
+---
+
+## 🚀 Version 1.1
+
+- Journey Timeline
+- Achievements
+- XP System
+- Weekly AI Reports
+- Weight Charts
+- Streak Tracking
+
+---
+
+## 🚀 Version 1.2
+
+- AI Workout Generator
+- AI Meal Planner
+- Camera Meal Recognition
+- Voice Logging
+- Smart Notifications
+
+---
+
+# 🤝 Contributing
+
+Contributions, ideas and feedback are always welcome.
+
+Feel free to fork the project and submit a Pull Request.
+
+---
+
+# 👨‍💻 Author
+
+**Vishal Nair**
+
+Manager – Presales
+
+LUCID IT SOLUTIONS PVT LTD
+
+GitHub
+
+https://github.com/vishalnair009
+
+---
+
+# ⭐ If you like this project
+
+Please consider giving it a ⭐ on GitHub.
+
+It helps the project reach more developers and motivates future development.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
