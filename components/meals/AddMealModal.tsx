@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useMealStore } from "../../app/store/mealStore";
 
 type AddMealModalProps = {
@@ -22,6 +22,8 @@ export default function AddMealModal({
   onClose,
 }: AddMealModalProps) {
   const addMeal = useMealStore((state) => state.addMeal);
+
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const [mealType, setMealType] = useState<
     "Breakfast" | "Lunch" | "Dinner" | "Snack"
@@ -54,6 +56,13 @@ export default function AddMealModal({
       const data = await response.json();
 
       setResult(data);
+
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 150);
     } catch {
       alert("Unable to analyze meal.");
     }
@@ -74,16 +83,16 @@ export default function AddMealModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
 
-      <div className="w-full max-w-md rounded-3xl bg-card p-6 shadow-2xl">
+      <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl bg-card p-6 shadow-2xl">
 
         <h2 className="text-2xl font-bold text-card-foreground">
           🍽 Add Meal
         </h2>
 
         <p className="mt-2 text-muted">
-          Let Drona analyze your meal.
+          Describe your meal and let Drona analyze it.
         </p>
 
         <select
@@ -102,57 +111,78 @@ export default function AddMealModal({
         </select>
 
         <textarea
+          rows={5}
           value={description}
           onChange={(e) =>
             setDescription(e.target.value)
           }
           placeholder="Example: 2 eggs, oats and one banana..."
-          rows={5}
-          className="mt-5 w-full rounded-2xl border border-border bg-background p-4"
+          className="mt-5 w-full rounded-2xl border border-border bg-background p-4 resize-none"
         />
 
         <button
           onClick={analyzeMeal}
           disabled={loading}
-          className="mt-5 w-full rounded-2xl bg-green-600 py-3 font-semibold text-white hover:bg-green-700"
+          className="mt-5 w-full rounded-2xl bg-green-600 py-3 font-semibold text-white transition hover:bg-green-700 disabled:opacity-60"
         >
           {loading
-            ? "Analyzing..."
+            ? "🤖 Drona is analyzing..."
             : "Analyze with Drona"}
         </button>
 
         {result && (
-          <div className="mt-6 rounded-2xl border border-border bg-background p-5">
+          <div
+            ref={resultRef}
+            className="mt-6 rounded-2xl border border-border bg-background p-5"
+          >
 
-            <h3 className="font-bold text-lg">
-              Nutrition Summary
+            <h3 className="text-xl font-bold text-card-foreground">
+              📊 Nutrition Summary
             </h3>
 
-            <div className="mt-4 space-y-2">
+            <div className="mt-5 grid grid-cols-2 gap-4">
 
-              <p>🔥 Calories: {result.calories}</p>
+              <StatCard
+                title="Calories"
+                value={`${result.calories} kcal`}
+              />
 
-              <p>🥩 Protein: {result.protein} g</p>
+              <StatCard
+                title="Protein"
+                value={`${result.protein} g`}
+              />
 
-              <p>🍚 Carbs: {result.carbs} g</p>
+              <StatCard
+                title="Carbs"
+                value={`${result.carbs} g`}
+              />
 
-              <p>🥑 Fat: {result.fat} g</p>
+              <StatCard
+                title="Fat"
+                value={`${result.fat} g`}
+              />
 
-              <p>
-                💚 Health Score:
-                {" "}
+            </div>
+
+            <div className="mt-6 rounded-2xl bg-green-100 dark:bg-green-900/30 p-5">
+
+              <h4 className="font-bold">
+                💚 Health Score
+              </h4>
+
+              <p className="mt-2 text-lg font-semibold">
                 {result.healthScore}/10
               </p>
 
             </div>
 
-            <div className="mt-5 rounded-xl bg-green-100 dark:bg-green-900/30 p-4">
+            <div className="mt-5 rounded-2xl bg-blue-100 dark:bg-blue-900/30 p-5">
 
-              <p className="font-semibold">
-                🤖 Drona says
-              </p>
+              <h4 className="font-bold">
+                🤖 Drona's Advice
+              </h4>
 
-              <p className="mt-2 text-sm">
+              <p className="mt-2 leading-7">
                 {result.advice}
               </p>
 
@@ -160,7 +190,7 @@ export default function AddMealModal({
 
             <button
               onClick={saveMeal}
-              className="mt-6 w-full rounded-2xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"
+              className="mt-6 w-full rounded-2xl bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
             >
               Save Meal
             </button>
@@ -172,10 +202,34 @@ export default function AddMealModal({
           onClick={onClose}
           className="mt-5 w-full rounded-2xl border border-border py-3"
         >
-          Cancel
+          Close
         </button>
 
       </div>
+
+    </div>
+  );
+}
+
+type StatCardProps = {
+  title: string;
+  value: string;
+};
+
+function StatCard({
+  title,
+  value,
+}: StatCardProps) {
+  return (
+    <div className="rounded-2xl border border-border bg-card p-4">
+
+      <p className="text-sm text-muted">
+        {title}
+      </p>
+
+      <p className="mt-2 text-xl font-bold text-card-foreground">
+        {value}
+      </p>
 
     </div>
   );

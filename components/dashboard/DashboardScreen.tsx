@@ -8,6 +8,7 @@ import MissionCard from "./MissionCard";
 import ProgressCard from "./ProgressCard";
 import DailyTrackerCard from "./DailyTrackerCard";
 import MealSummaryCard from "./MealSummaryCard";
+import TodayProgressCard from "./TodayProgressCard";
 
 import AddMealModal from "../meals/AddMealModal";
 
@@ -62,6 +63,12 @@ export default function DashboardScreen({
             <p className="mt-2 text-muted">
               Every healthy choice today brings you closer to your goal.
             </p>
+          </div>
+
+          {/* Today's Progress */}
+
+          <div className="mb-8">
+            <TodayProgressCard />
           </div>
 
           {/* Meet Drona */}
